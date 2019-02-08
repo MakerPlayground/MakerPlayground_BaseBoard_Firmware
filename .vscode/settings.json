@@ -1,0 +1,9 @@
+{
+    "terminal.integrated.env.osx": {
+        "PATH": "/Users/nuntipat/.platformio/penv/bin:/Users/nuntipat/.platformio/penv:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin",
+        "PLATFORMIO_CALLER": "vscode"
+    },
+    "files.associations": {
+        "map": "cpp"
+    }
+}
