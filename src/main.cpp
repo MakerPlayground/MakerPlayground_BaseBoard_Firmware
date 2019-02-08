@@ -1,17 +1,6 @@
-/*  NETPIE ESP8266 basic sample                            */
-/*  More information visit : https://netpie.io             */
-
 #include <ESP8266WiFi.h>
 #include <MicroGear.h>
 #include <map>
-
-// const char* ssid     = <WIFI_SSID>;
-// const char* password = <WIFI_KEY>;
-
-// #define APPID   <APPID>
-// #define KEY     <APPKEY>
-// #define SECRET  <APPSECRET>
-// #define ALIAS   "esp8266"
 
 WiFiClient client;
 
@@ -36,40 +25,10 @@ void onMsghandler(char *topic, uint8_t* msg, unsigned int msglen)
     topicValue[String(topic)] = atof((char *) msg); 
 }
 
-// void onConnected(char *attribute, uint8_t* msg, unsigned int msglen) 
-// {
-// }
-
-// void initWifi(const char* ssid, const char* pass) 
-// {
-//     if (WiFi.begin(ssid, pass)) 
-//     {
-//         while (WiFi.status() != WL_CONNECTED) 
-//         {
-//             delay(500);
-//             Serial.print(".");
-//         }
-//     }
-//     // Serial.println(WiFi.localIP());   
-// }
-
-// void initNetpie(char* key, char* secret, char* alias, char* appid) 
-// {
-//     microgear.init(key, secret, alias);
-//     microgear.connect(appid);
-// }
-
-// void printLog(const char* message)
-// {
-//     Serial.println(message);
-// }
-
 void processCommand() 
 {
-    // if (strlen(serialBuffer) < 2)
-    // {
-    //     return;
-    // }
+    if (strlen(serialBuffer) == 0)
+        return;
 
     char* command[6];
     int numParameter = 0;
@@ -77,11 +36,11 @@ void processCommand()
     while (command[numParameter] != NULL && numParameter <= 4)
         command[++numParameter] = strtok(NULL, ",\r"); 
     
-    Serial.println(numParameter);
-    for (int i=0; i<numParameter; i++)
-    {
-        Serial.println(command[i]);
-    }
+    // Serial.println(numParameter);
+    // for (int i=0; i<numParameter; i++)
+    // {
+    //     Serial.println(command[i]);
+    // }
 
     if (numParameter == 3 && command[0][0] == 'W')  // connect to wifi
     {
@@ -144,10 +103,10 @@ void processCommand()
             Serial.println("Error");
         }
     } 
-    // else 
-    // {
-    //     Serial.println("Error");
-    // }
+    else
+    {
+        Serial.println("Error");
+    }
 
     // clear buffer for the next command
     serialBuffer[0] = '\0';
@@ -159,17 +118,14 @@ void setup()
     Serial.setTimeout(5);
 
     microgear.on(MESSAGE, onMsghandler);
-    // microgear.on(PRESENT,onFoundgear);
-    // microgear.on(ABSENT,onLostgear);
-    // microgear.on(CONNECTED,onConnected);
 }
 
 void loop() 
 {
     int numByteRead = Serial.readBytesUntil('\n', serialBuffer, 128);
     serialBuffer[numByteRead] = '\0';
-    Serial.print("Get command : ");
-    Serial.println(serialBuffer);
+    // Serial.print("Get command : ");
+    // Serial.println(serialBuffer);
     processCommand();
 
     if (microgear.connected()) 
@@ -178,22 +134,4 @@ void loop()
     }
 
     delay(2000);
-    // else if (hasInitNetpie)
-    // {
-    //     microgear.connect(appid);
-    // }
 }
-
-// while (Serial.available() > 0) 
-//     {
-//         serialBuffer[numChar] = Serial.read();
-//         if (serialBuffer[numChar] == '\n') 
-//         {
-//             processCommand();
-//             break;
-//         } 
-//         else 
-//         {
-//             numChar++;
-//         }
-//     }
