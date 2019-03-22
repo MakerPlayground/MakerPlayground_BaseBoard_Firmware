@@ -86,11 +86,38 @@ bool Netpie_ProcessCommand(char* command[], int numParameter, bool hasInitWifi)
         }
         return false;
     }
+    else if (numParameter == 2 && command[0][0] == 'U') // netpie's unsubscribe
+    {
+        if (hasInitNetpie)
+        {
+            microgear->unsubscribe(command[1]);
+            return true;
+        }
+        return false;
+    }
     else if (numParameter == 2 && command[0][0] == 'G')  // get netpie's topic value
     {
         if (hasInitNetpie)
         {
             Serial.println(topicValue[String(command[1])]);
+            return true;
+        }
+        return false;
+    }
+    else if (numParameter == 2 && command[0][0] == 'O') // netpie's notification
+    {
+        if (hasInitNetpie)
+        {
+            microgear->publish("/@push/owner", command[1]);
+            return true;
+        }
+        return false;
+    }
+    else if (numParameter == 2 && command[0][0] == 'F') // netpie's feed
+    {
+        if (hasInitNetpie)
+        {
+            microgear->writeFeed(command[1], command[2], command[3]);   // feedid, data, apikey
             return true;
         }
         return false;
