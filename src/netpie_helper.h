@@ -5,6 +5,7 @@
 
 void Netpie_Init(WiFiClient& client);
 void Netpie_Update();
+bool Netpie_Connected();
 bool Netpie_ProcessCommand(char* command[], int numParameter, bool hasInitWifi);
 
 #endif

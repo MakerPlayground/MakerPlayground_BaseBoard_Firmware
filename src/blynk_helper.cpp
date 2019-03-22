@@ -101,6 +101,11 @@ bool Blynk_ProcessCommand(char* command[], int numParameter, bool hasInitWifi)
     return false;
 }
 
+bool Blynk_Connected()
+{
+    return hasInitBlynk;
+}
+
 BLYNK_READ(V0) 
 {
     Blynk.virtualWrite(0, virtualPinValue[0]);

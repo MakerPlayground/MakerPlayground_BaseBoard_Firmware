@@ -5,6 +5,7 @@
 WiFiClient client;
 bool hasInitWifi = false;
 char serialBuffer[128];
+unsigned long lastToggleTime = 0;
 
 void processCommand() 
 {
@@ -52,6 +53,9 @@ void setup()
     Serial.begin(115200);
     Serial.setTimeout(5);
 
+    pinMode(0, OUTPUT);
+    digitalWrite(0, HIGH);
+
     Netpie_Init(client);
     Blynk_Init();
 }
@@ -68,4 +72,21 @@ void loop()
     Blynk_Update();
 
     // delay(2000);
+    if (Netpie_Connected() || Blynk_Connected())
+    {
+        digitalWrite(0, LOW);
+    }
+    else if (hasInitWifi)
+    {
+        if (millis() - lastToggleTime > 500)
+        {
+            digitalWrite(0, !digitalRead(0));
+            lastToggleTime = millis();
+        }
+    }
+    else
+    {
+        digitalWrite(0, HIGH);
+    }
+    
 }

@@ -61,8 +61,8 @@ bool Netpie_ProcessCommand(char* command[], int numParameter, bool hasInitWifi)
         {
             microgear->init(command[1], command[2], command[3]); // key, secret, alias
             microgear->connect(command[4]);  // appid
-            hasInitNetpie = true;
-            return true;
+            hasInitNetpie = microgear->connected();
+            return hasInitNetpie;
         }
         return false;
     }
@@ -97,4 +97,9 @@ bool Netpie_ProcessCommand(char* command[], int numParameter, bool hasInitWifi)
     }
 
     return false;
+}
+
+bool Netpie_Connected()
+{
+    return hasInitNetpie;
 }

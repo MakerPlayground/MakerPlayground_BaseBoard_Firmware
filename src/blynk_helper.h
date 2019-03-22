@@ -3,6 +3,7 @@
 
 void Blynk_Init();
 void Blynk_Update();
+bool Blynk_Connected();
 bool Blynk_ProcessCommand(char* command[], int numParameter, bool hasInitWifi);
 
 #endif
