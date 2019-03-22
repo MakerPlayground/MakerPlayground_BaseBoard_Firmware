@@ -113,7 +113,7 @@ bool Netpie_ProcessCommand(char* command[], int numParameter, bool hasInitWifi)
         }
         return false;
     }
-    else if (numParameter == 2 && command[0][0] == 'F') // netpie's feed
+    else if (numParameter == 4 && command[0][0] == 'F') // netpie's feed
     {
         if (hasInitNetpie)
         {
