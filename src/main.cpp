@@ -53,6 +53,8 @@ void setup()
     Serial.begin(115200);
     Serial.setTimeout(5);
 
+    WiFi.mode(WIFI_STA);
+
     pinMode(0, OUTPUT);
     digitalWrite(0, HIGH);
 
