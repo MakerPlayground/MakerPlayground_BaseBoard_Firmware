@@ -1,6 +1,6 @@
 #include <ESP8266WiFi.h>
 #include "blynk_helper.h"
-#include "netpie_helper.h"
+#include "ntp_helper.h"
 
 WiFiClient client;
 bool hasInitWifi = false;
@@ -34,8 +34,8 @@ void processCommand()
         hasInitWifi = true;
         Serial.println("OK");
     }
-    else if (Netpie_ProcessCommand(command, numParameter, hasInitWifi) 
-        || Blynk_ProcessCommand(command, numParameter, hasInitWifi))
+    else if (Blynk_ProcessCommand(command, numParameter, hasInitWifi)
+        || NTP_ProcessCommand(command, numParameter, hasInitWifi))
     {
         Serial.println("OK");
     }
@@ -58,8 +58,8 @@ void setup()
     pinMode(0, OUTPUT);
     digitalWrite(0, HIGH);
 
-    Netpie_Init(client);
     Blynk_Init();
+    NTP_Init();
 }
 
 void loop() 
@@ -70,11 +70,11 @@ void loop()
     // Serial.println(serialBuffer);
     processCommand();
 
-    Netpie_Update();
     Blynk_Update();
+    NTP_Update();
 
     // delay(2000);
-    if (Netpie_Connected() || Blynk_Connected())
+    if (Blynk_Connected() || NTP_Connected())
     {
         digitalWrite(0, LOW);
     }
