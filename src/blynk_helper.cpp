@@ -36,11 +36,11 @@ void Blynk_Update()
 
 bool Blynk_ProcessCommand(char* command[], int numParameter, bool hasInitWifi) 
 {
-    if (numParameter == 2 && command[0][0] == 'B')  // connect to blynk
+    if (numParameter == 3 && command[0][0] == 'B')  // connect to blynk
     {
         if (hasInitWifi)
         {
-            Blynk.config(command[1]);   // auth token
+            Blynk.config(command[1], BLYNK_DEFAULT_DOMAIN, BLYNK_DEFAULT_PORT, command[2]);   // auth token, template id
             if (Blynk.connect())
             {
                 hasInitBlynk = true;
@@ -86,15 +86,6 @@ bool Blynk_ProcessCommand(char* command[], int numParameter, bool hasInitWifi)
                 Blynk.virtualWrite(atoi(command[1]), atoi(command[2]), atof(command[3]), atof(command[4]), command[5]);
                 return true;
             }
-        }
-        return false;
-    }
-    else if (numParameter == 2 && command[0][0] == 'A')  // blynk notify
-    {
-        if (hasInitBlynk)
-        {
-            Blynk.notify(command[1]);
-            return true;
         }
         return false;
     }
