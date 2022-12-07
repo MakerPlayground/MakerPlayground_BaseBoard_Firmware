@@ -1,6 +1,7 @@
 #include <ESP8266WiFi.h>
 #include "blynk_helper.h"
 #include "ntp_helper.h"
+#include "line_helper.h"
 
 WiFiClient client;
 bool hasInitWifi = false;
@@ -35,7 +36,8 @@ void processCommand()
         Serial.println("OK");
     }
     else if (Blynk_ProcessCommand(command, numParameter, hasInitWifi)
-        || NTP_ProcessCommand(command, numParameter, hasInitWifi))
+        || NTP_ProcessCommand(command, numParameter, hasInitWifi)
+        || LINE_ProcessCommand(command, numParameter, hasInitWifi))
     {
         Serial.println("OK");
     }
@@ -60,6 +62,7 @@ void setup()
 
     Blynk_Init();
     NTP_Init();
+    LINE_Init();
 }
 
 void loop() 
@@ -72,9 +75,11 @@ void loop()
 
     Blynk_Update();
     NTP_Update();
+    LINE_Update();
 
     // delay(2000);
-    if (Blynk_Connected() || NTP_Connected())
+
+    if (Blynk_Connected() || NTP_Connected() || LINE_Connected())   // indicator led will not changed for line notify since we can't test connection to line server
     {
         digitalWrite(0, LOW);
     }
